@@ -1,27 +1,49 @@
 {
   "name": "snipselect",
   "displayName": "SnipSelect",
-  "description": "Select multiple snippets to paste later",
+  "description": "Copy and select multiple snippets for pasting",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.85.0"
   },
-  "main": "./dist/extension.js",
+  "activationEvents": [
+    
+  ],
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "snipselect.copySnippet",
+        "title": "SnipSelect: Copy Selected Snippet"
+      },
+      {
+        "command": "snipselect.pasteSnippet",
+        "title": "SnipSelect: Paste Snippet"
+      },
       {
         "command": "snipselect.openPanel",
         "title": "SnipSelect: Open Panel"
       }
+    ],
+    "keybindings": [
+      {
+        "command": "snipselect.copySnippet",
+        "key": "ctrl+alt+c",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "snipselect.pasteSnippet",
+        "key": "ctrl+alt+v",
+        "when": "editorTextFocus"
+      }
     ]
   },
   "scripts": {
-    "compile": "esbuild src/extension.ts --bundle --outdir=dist --platform=node",
-    "watch": "esbuild src/extension.ts --bundle --outdir=dist --platform=node --watch"
+    "vscode:prepublish": "tsc -p ./"
   },
   "devDependencies": {
-    "esbuild": "^0.17.0",
-    "typescript": "^4.9.4",
-    "@types/vscode": "^1.70.0"
+    "typescript": "^5.8.3",
+    "@types/vscode": "^1.99.1",
+    "@types/node": "^20.11.24"
   }
 }

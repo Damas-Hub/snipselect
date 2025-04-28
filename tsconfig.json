@@ -6,9 +6,9 @@
 	  "esModuleInterop": true,
 	  "skipLibCheck": true,
 	  "forceConsistentCasingInFileNames": true,
-	  "outDir": "./dist",
+	  "outDir": "./out",  // Change dist to out
 	  "rootDir": "./src",
-	  "lib": ["ES6"]
+	  "lib": ["ES6", "dom"]
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules"]

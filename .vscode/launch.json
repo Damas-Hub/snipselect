@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 	  {
-		"name": "Launch Extension",
+		"name": "Run Extension",
 		"type": "extensionHost",
 		"request": "launch",
 		"runtimeExecutable": "${execPath}",
@@ -10,9 +10,8 @@
 		  "--extensionDevelopmentPath=${workspaceFolder}"
 		],
 		"outFiles": [
-		  "${workspaceFolder}/dist/**/*.js"
-		],
-		"preLaunchTask": "npm: compile"
+		  "${workspaceFolder}/out/**/*.js"
+		]
 	  }
 	]
   }

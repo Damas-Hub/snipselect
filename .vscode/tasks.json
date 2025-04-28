@@ -3,7 +3,7 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-		{
+        {
             "label": "watch",
             "dependsOn": [
                 "npm: watch:tsc",
@@ -22,7 +22,6 @@
             "script": "watch:esbuild",
             "group": "build",
             "problemMatcher": [],
-
             "isBackground": true,
             "label": "npm: watch:esbuild",
             "presentation": {
@@ -30,7 +29,7 @@
                 "reveal": "never"
             }
         },
-		{
+        {
             "type": "npm",
             "script": "watch:tsc",
             "group": "build",
@@ -42,24 +41,32 @@
                 "reveal": "never"
             }
         },
-		{
-			"type": "npm",
-			"script": "watch-tests",
-			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
-			},
-			"group": "build"
-		},
-		{
-			"label": "tasks: watch-tests",
-			"dependsOn": [
-				"npm: watch",
-				"npm: watch-tests"
-			],
-			"problemMatcher": []
-		}
-	]
+        {
+            "type": "npm",
+            "script": "watch-tests",
+            "problemMatcher": "$tsc-watch",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "never",
+                "group": "watchers"
+            },
+            "group": "build"
+        },
+        {
+            "label": "tasks: watch-tests",
+            "dependsOn": [
+                "npm: watch",
+                "npm: watch-tests"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "install",
+            "group": "clean",
+            "problemMatcher": [],
+            "label": "npm: install",
+            "detail": "install dependencies from package"
+        }
+    ]
 }
