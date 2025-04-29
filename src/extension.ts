@@ -34,20 +34,37 @@ export function activate(context: vscode.ExtensionContext) {
 
       copiedSnippets.push(selectedText);
       vscode.window.showInformationMessage(`Copied snippet: "${selectedText}"`);
+
+      // Update the snippets list in the webview
+      const panel = vscode.window.activeTextEditor?.document.uri.toString();
+      if (panel) {
+        const webviewPanel = vscode.window.createWebviewPanel(
+          'snipselectPanel',
+          'SnipSelect Panel',
+          vscode.ViewColumn.One,
+          { enableScripts: true,
+            retainContextWhenHidden: true,
+          }
+        );
+        webviewPanel.webview.postMessage({
+          command: 'updateSnippets',
+          snippets: copiedSnippets,
+        });
+      }
     }
   );
 
   // Register pasteSnippet command
   const pasteSnippetCommand = vscode.commands.registerCommand(
     'snipselect.pasteSnippet',
-    async () => {
+    async (snippet: string) => {
       if (copiedSnippets.length === 0) {
         vscode.window.showInformationMessage('No snippets available to paste.');
         return;
       }
 
       // Let user pick a snippet
-      const selected = await vscode.window.showQuickPick(copiedSnippets, {
+      const selected = snippet || await vscode.window.showQuickPick(copiedSnippets, {
         placeHolder: 'Select a snippet to paste',
       });
 
@@ -85,31 +102,33 @@ function openPanelUI() {
 
 // HTML for the Webview (optional)
 function getWebviewContent() {
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>SnipSelect Panel</title>
-      <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; }
-        button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; margin: 10px 0; width: 100%; }
-        button:hover { background-color: #45a049; }
-      </style>
-    </head>
-    <body>
-      <h1>SnipSelect Panel</h1>
-      <button onclick="copySnippet()">Copy Snippet</button>
-      <button onclick="pasteSnippet()">Paste Snippet</button>
-      <script>
-        const vscode = acquireVsCodeApi();
-        function copySnippet() { vscode.postMessage({ command: 'copySnippet' }); }
-        function pasteSnippet() { vscode.postMessage({ command: 'pasteSnippet' }); }
-      </script>
-    </body>
-    </html>
-  `;
-}
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SnipSelect Panel</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; }
+          button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; margin: 10px 0; width: 100%; }
+          button:hover { background-color: #45a049; }
+        </style>
+      </head>
+      <body>
+        <h1>SnipSelect Panel</h1>
+        <button onclick="copySnippet()">Copy Snippet</button>
+        <button onclick="pasteSnippet()">Paste Snippet</button>
+        <script>
+          const vscode = acquireVsCodeApi();
+          function copySnippet() { vscode.postMessage({ command: 'copySnippet' }); }
+          function pasteSnippet() { vscode.postMessage({ command: 'pasteSnippet' }); }
+        </script>
+      </body>
+      </html>
+    `;
+  }
+  
+  
 
 export function deactivate() {}
