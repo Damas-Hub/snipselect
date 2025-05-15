@@ -1,4 +1,3 @@
-
 # SnipSelect
 SnipSelect is a Visual Studio Code extension that allows users to copy and select multiple snippets of code for pasting. It's perfect for developers who often need to copy multiple sections of code at once and choose which one to paste later.
 ## Features
