@@ -24,5 +24,4 @@ Install dependencies: `npm install`
 Run in VS Code by pressing `F5`.
 ## Contributing
 Fork the repository, create a branch (`git checkout -b feature/your-feature`), commit your changes (`git commit -am 'Add feature'`), push (`git push origin feature/your-feature`), and open a pull request.
-## License
-This project is licensed under the MIT License.
+ 
